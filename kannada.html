@@ -1227,11 +1227,11 @@ body {
         <a href="index.html" class="nav-item" data-lang="tamil">Tamil</a>
         <a href="telugu.html" class="nav-item" data-lang="telugu">Telugu</a>
         <a href="malayalam.html" class="nav-item" data-lang="malayalam">Malayalam</a>
-        <a href="kannada.html" class="nav-item" data-lang="kannada">Kannada</a>
+        <a href="kannada.html" class="nav-item active" data-lang="kannada">Kannada</a>
         <a href="bengali.html" class="nav-item" data-lang="bengali">Bengali</a>
         <a href="hindi.html" class="nav-item" data-lang="hindi">Hindi</a>
         <a href="english.html" class="nav-item" data-lang="english">English</a>
-        <a href="tamilaudio.html" class="nav-item active" data-lang="tamil_audio">Kukufm (Tamil)</a>
+        <a href="tamilaudio.html" class="nav-item" data-lang="tamil_audio">Kukufm (Tamil)</a>
       </nav>
       
       <!-- Search Container -->
@@ -1262,11 +1262,11 @@ body {
       <a href="index.html" class="mobile-nav-item" data-lang="tamil">🏠 Tamil (Home)</a>
       <a href="telugu.html" class="mobile-nav-item" data-lang="telugu">Telugu</a>
       <a href="malayalam.html" class="mobile-nav-item" data-lang="malayalam">Malayalam</a>
-      <a href="kannada.html" class="mobile-nav-item" data-lang="kannada">Kannada</a>
+      <a href="kannada.html" class="mobile-nav-item active" data-lang="kannada">Kannada</a>
       <a href="bengali.html" class="mobile-nav-item" data-lang="bengali">Bengali</a>
       <a href="hindi.html" class="mobile-nav-item" data-lang="hindi">Hindi</a>
       <a href="english.html" class="mobile-nav-item" data-lang="english">English</a>
-      <a href="tamilaudio.html" class="mobile-nav-item active" data-lang="tamil_audio">Kukufm (Tamil)</a>
+      <a href="tamilaudio.html" class="mobile-nav-item" data-lang="tamil_audio">Kukufm (Tamil)</a>
       <a href="https://t.me/panguplay_chat" target="_blank" class="mobile-nav-item telegram-link"><i class="fab fa-telegram-plane"></i>Join Us</a>
     </nav>
   </div>
@@ -1298,7 +1298,7 @@ body {
     </button>  
     <div class="loading" id="loadingState">
       <div class="spinner"></div>
-      <div class="loading-text">Loading Tamil Audio shows...</div>
+      <div class="loading-text">Loading Kannada shows...</div>
     </div>
     <div id="sectionsContainer"></div>
     <div class="empty-state hidden" id="emptyState">
@@ -1322,7 +1322,6 @@ body {
           controls 
           preload="metadata"
           playsinline
-		  style="background: url('Meow_Watch_KUKU_TV_Free.png') center center / cover no-repeat; height: 60vh; border-radius: 12px;"
         ></video>
       </div>
       
@@ -1335,9 +1334,11 @@ body {
           <div class="control-group">
             <label class="control-label">Quality</label>
             <select id="qualitySelect" class="control-select">
-			  <option value="audio_128kb" selected>128 KB</option>
-              <option value="audio_64kb">64 KB</option>
-              <option value="audio_24kb">24 KB</option>
+              <option value="video_1080p">1080p HD</option>
+              <option value="video_720p" selected>720p HD</option>
+              <option value="video_480p">480p SD</option>
+              <option value="video_360p">360p SD</option>
+              <option value="video_240p">240p SD</option>
             </select>
           </div>
         </div>
@@ -1369,7 +1370,7 @@ let hls = null;
 let autoPlayEnabled = true;
 let watchHistory = {};
 let searchTimeout = null;
-let currentLanguage = 'tamilaudio';
+let currentLanguage = 'kannada';
 let isSearchMode = false;
 let lazyLoadObserver = null;
 let loadedSections = new Set();
@@ -1416,9 +1417,9 @@ document.addEventListener('DOMContentLoaded', () => {
 // Get current page language
 function getCurrentLanguage() {
   const path = window.location.pathname;
-  const filename = path.split('/').pop() || 'tamilaudio.html';
+  const filename = path.split('/').pop() || 'kannada.html';
   
-  if (filename === 'tamilaudio.html') return 'tamilaudio';
+  if (filename === 'kannada.html') return 'kannada';
   return filename.replace('.html', '');
 }
 
