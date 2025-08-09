@@ -848,25 +848,24 @@ body {
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
 }
 
-/* Netflix-style numbered cards - FIXED VERSION */
+/* Netflix-style numbered cards - NUMBERS INSIDE CARDS */
 .show-card.numbered {
   position: relative;
-  overflow: visible; /* Keep this for number visibility */
-  margin-left: 20px; /* Add left margin to accommodate the number */
-  margin-bottom: 15px; /* Add bottom margin for the number */
+  overflow: hidden; /* Changed to hidden to keep numbers inside */
+  /* Remove external margins since numbers stay inside */
 }
 
 .show-card.numbered::before {
   content: attr(data-rank);
   position: absolute;
-  bottom: -10px;
-  left: -20px; /* Adjusted to work with margin-left */
-  font-size: 5rem; /* Reduced from 6rem */
+  bottom: 70px; /* Moved inside the card */
+  left: 10px;  /* Moved inside the card */
+  font-size: 3rem; /* Smaller size to fit inside */
   font-weight: 900;
   color: transparent;
-  -webkit-text-stroke: 2px var(--primary); /* Reduced stroke width */
+  -webkit-text-stroke: 2px var(--primary);
   text-stroke: 2px var(--primary);
-  z-index: 1; /* Changed from -1 to 1 */
+  z-index: 3; /* Above image and info */
   line-height: 1;
   pointer-events: none;
   font-family: 'Inter', sans-serif;
@@ -874,81 +873,203 @@ body {
 
 .show-card.numbered .show-image {
   position: relative;
-  z-index: 2;
+  z-index: 1;
 }
 
 .show-card.numbered .show-info {
   position: relative;
   z-index: 2;
+  background: rgba(0, 0, 0, 0.8); /* Semi-transparent background */
+  backdrop-filter: blur(5px);
 }
 
 /* Hover effect for numbered cards */
 .show-card.numbered:hover::before {
   -webkit-text-stroke: 2px var(--secondary);
   text-stroke: 2px var(--secondary);
-  transform: scale(1.05); /* Reduced from 1.1 */
+  transform: scale(1.1);
   transition: all 0.3s ease;
 }
 
 /* Alternative solid number style */
 .show-card.numbered.solid-number::before {
-  color: var(--primary);
+  color: rgba(255, 75, 43, 0.9); /* Semi-transparent */
   -webkit-text-stroke: none;
   text-stroke: none;
-  opacity: 0.8; /* Reduced from 0.9 */
-  font-size: 4rem; /* Reduced from 4.5rem */
-  bottom: -8px; /* Adjusted */
-  left: -15px; /* Adjusted */
+  font-size: 2.5rem;
+  bottom: 70px;
+  left: 15px;
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.8); /* Add shadow for readability */
 }
 
 .show-card.numbered.solid-number:hover::before {
-  opacity: 0.6; /* Reduced from 0.5 */
-  color: var(--secondary);
+  color: rgba(255, 107, 71, 0.9);
+  transform: scale(1.2);
 }
 
-/* Grid adjustments for numbered cards */
-.section-grid .show-card.numbered:first-child {
-  margin-left: 25px; /* Extra margin for first card in grid */
+/* Alternative: Number in top-right corner */
+.show-card.numbered.top-right::before {
+  top: 10px;
+  right: 10px;
+  left: auto;
+  bottom: auto;
+  background: var(--primary);
+  color: white;
+  padding: 5px 10px;
+  border-radius: 50%;
+  font-size: 1rem;
+  font-weight: 700;
+  -webkit-text-stroke: none;
+  text-stroke: none;
+  min-width: 25px;
+  text-align: center;
 }
 
-.section-grid .show-card.numbered:nth-child(3n+1) {
-  margin-left: 25px; /* Ensure first card in each row has proper margin */
+.show-card.numbered.top-right:hover::before {
+  background: var(--secondary);
+  transform: scale(1.1);
 }
 
-/* Horizontal scroll adjustments for numbered cards */
-.shows-scroll .show-card.numbered:first-child {
-  margin-left: 25px;
+/* Alternative: Number badge style */
+.show-card.numbered.badge::before {
+  top: 10px;
+  left: 10px;
+  bottom: auto;
+  background: linear-gradient(135deg, var(--primary), var(--secondary));
+  color: white;
+  padding: 4px 8px;
+  border-radius: 12px;
+  font-size: 0.9rem;
+  font-weight: 700;
+  -webkit-text-stroke: none;
+  text-stroke: none;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+}
+
+.show-card.numbered.badge:hover::before {
+  transform: scale(1.1);
+  box-shadow: 0 4px 12px rgba(255, 75, 43, 0.4);
+}
+
+/* Custom colors for top ranks - ONLY for Top 10 and Top Rated sections */
+.section.top-tier .show-card.numbered[data-rank="1"]::before {
+  -webkit-text-stroke: 2px #ffd700 !important;
+  text-stroke: 2px #ffd700 !important;
+}
+
+.section.top-tier .show-card.numbered[data-rank="2"]::before {
+  -webkit-text-stroke: 2px #c0c0c0 !important;
+  text-stroke: 2px #c0c0c0 !important;
+}
+
+.section.top-tier .show-card.numbered[data-rank="3"]::before {
+  -webkit-text-stroke: 2px #cd7f32 !important;
+  text-stroke: 2px #cd7f32 !important;
+}
+
+/* Solid number versions with custom colors - ONLY for top tier sections */
+.section.top-tier .show-card.numbered.solid-number[data-rank="1"]::before {
+  color: #ffd700 !important;
+  -webkit-text-stroke: none !important;
+  text-stroke: none !important;
+}
+
+.section.top-tier .show-card.numbered.solid-number[data-rank="2"]::before {
+  color: #c0c0c0 !important;
+  -webkit-text-stroke: none !important;
+  text-stroke: none !important;
+}
+
+.section.top-tier .show-card.numbered.solid-number[data-rank="3"]::before {
+  color: #cd7f32 !important;
+  -webkit-text-stroke: none !important;
+  text-stroke: none !important;
+}
+
+/* Badge versions with custom colors - ONLY for top tier sections */
+.section.top-tier .show-card.numbered.badge[data-rank="1"]::before {
+  background: linear-gradient(135deg, #ffd700, #ffed4e) !important;
+}
+
+.section.top-tier .show-card.numbered.badge[data-rank="2"]::before {
+  background: linear-gradient(135deg, #c0c0c0, #e8e8e8) !important;
+}
+
+.section.top-tier .show-card.numbered.badge[data-rank="3"]::before {
+  background: linear-gradient(135deg, #cd7f32, #daa55a) !important;
+}
+
+/* Top-right versions with custom colors - ONLY for top tier sections */
+.section.top-tier .show-card.numbered.top-right[data-rank="1"]::before {
+  background: #ffd700 !important;
+  color: #000 !important;
+}
+
+.section.top-tier .show-card.numbered.top-right[data-rank="2"]::before {
+  background: #c0c0c0 !important;
+  color: #000 !important;
+}
+
+.section.top-tier .show-card.numbered.top-right[data-rank="3"]::before {
+  background: #cd7f32 !important;
+  color: #fff !important;
+}
+
+/* Hover effects for top ranks - ONLY for top tier sections */
+.section.top-tier .show-card.numbered[data-rank="1"]:hover::before,
+.section.top-tier .show-card.numbered[data-rank="2"]:hover::before,
+.section.top-tier .show-card.numbered[data-rank="3"]:hover::before {
+  transform: scale(1.2) !important;
 }
 
 /* Mobile adjustments */
 @media (max-width: 768px) {
-  .show-card.numbered {
-    margin-left: 15px; /* Reduced margin for mobile */
-    margin-bottom: 10px;
-  }
-
   .show-card.numbered::before {
-    font-size: 3.5rem; /* Reduced from 4rem */
-    bottom: -6px; /* Adjusted */
-    left: -15px; /* Adjusted */
-    -webkit-text-stroke: 1.5px var(--primary); /* Thinner stroke */
+    font-size: 2.5rem;
+    bottom: 70px;
+    left: 8px;
+    -webkit-text-stroke: 1.5px var(--primary);
     text-stroke: 1.5px var(--primary);
   }
 
   .show-card.numbered.solid-number::before {
-    font-size: 3rem; /* Reduced from 3.5rem */
-    bottom: -4px; /* Adjusted */
-    left: -12px; /* Adjusted */
+    font-size: 2rem;
+    bottom: 70px;
+    left: 12px;
   }
 
-  .section-grid .show-card.numbered:first-child,
-  .section-grid .show-card.numbered:nth-child(3n+1) {
-    margin-left: 20px;
+  .show-card.numbered.top-right::before {
+    top: 8px;
+    right: 8px;
+    font-size: 0.9rem;
+    padding: 4px 8px;
+    min-width: 22px;
   }
 
-  .shows-scroll .show-card.numbered:first-child {
-    margin-left: 20px;
+  .show-card.numbered.badge::before {
+    top: 8px;
+    left: 8px;
+    font-size: 0.8rem;
+    padding: 3px 6px;
   }
+}
+
+/* Ensure numbers don't interfere with title */
+.show-card.numbered .show-title {
+  padding-right: 0; /* Reset if needed */
+}
+
+/* Optional: Add slight overlay to make numbers more visible */
+.show-card.numbered::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 60px;
+  background: linear-gradient(transparent, rgba(0, 0, 0, 0.3));
+  z-index: 1;
+  pointer-events: none;
 }
 
 /* Mobile Responsive */
@@ -1776,7 +1897,7 @@ function renderSectionsWithSkeletons() {
     const sectionIcon = getSectionIcon(section.title);
     
     return `
-      <div class="section" id="section-${sectionIndex}" data-section-index="${sectionIndex}">
+      <div class="section ${isTopTierSection(section.title) ? 'top-tier' : ''}" id="section-${sectionIndex}" data-section-index="${sectionIndex}">
         <div class="section-header">
           <h2 class="section-title">
             <span class="section-icon">${sectionIcon}</span>
@@ -1976,6 +2097,20 @@ function shouldUseSolidNumbers(sectionTitle) {
   ];
   
   return solidNumberSections.some(keyword => 
+    sectionTitle.toLowerCase().includes(keyword.toLowerCase())
+  );
+}
+
+// Add this function to check if section should have gold/silver/bronze colors
+function isTopTierSection(sectionTitle) {
+  const topTierSections = [
+    'top 10',
+    'top rated',
+    'most popular',
+    'trending now'
+  ];
+  
+  return topTierSections.some(keyword => 
     sectionTitle.toLowerCase().includes(keyword.toLowerCase())
   );
 }
