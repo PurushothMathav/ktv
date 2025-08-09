@@ -1,7 +1,7 @@
 // Optimized Service Worker for Meow Streaming Site
 // service-worker.js
 
-const CACHE_VERSION = 'v0908251440';
+const CACHE_VERSION = 'v0908251540';
 const CACHE_NAMES = {
   STATIC: `ktv-static-${CACHE_VERSION}`,
   DYNAMIC: `ktv-dynamic-${CACHE_VERSION}`,
@@ -59,9 +59,9 @@ const NETWORK_FIRST_PATTERNS = [
 
 // Cache size limits
 const CACHE_LIMITS = {
-  IMAGES: 100, // Maximum 100 images
-  JSON: 200,   // Maximum 200 JSON files
-  DYNAMIC: 50  // Maximum 50 dynamic resources
+  IMAGES: 600, // Maximum 100 images
+  JSON: 600,   // Maximum 200 JSON files
+  DYNAMIC: 600  // Maximum 50 dynamic resources
 };
 
 // Install event - cache static assets
