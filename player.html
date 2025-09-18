@@ -1503,20 +1503,18 @@ setupPinchZoom() {
   let initialDistance = null;
   const overlay = document.getElementById("gestureOverlay");
 
+  overlay.style.pointerEvents = "none"; // default: pass through
+
   overlay.addEventListener("touchstart", (e) => {
-    if (e.touches.length === 2 && document.fullscreenElement === this.elements.playerContainer) {
-      // record pinch distance
+    if (document.fullscreenElement !== this.elements.playerContainer) return;
+
+    if (e.touches.length === 2) {
+      // enable overlay only for pinch
+      overlay.style.pointerEvents = "auto";
+
       const dx = e.touches[0].clientX - e.touches[1].clientX;
       const dy = e.touches[0].clientY - e.touches[1].clientY;
-      initialDistance = Math.sqrt(dx*dx + dy*dy);
-    }
-
-    // 👇 pass single-finger touch to iframe
-    if (e.touches.length === 1) {
-      overlay.style.pointerEvents = "none"; // let iframe handle it
-      setTimeout(() => {
-        overlay.style.pointerEvents = "auto"; // re-enable after touch ends
-      }, 300);
+      initialDistance = Math.sqrt(dx * dx + dy * dy);
     }
   }, { passive: true });
 
@@ -1524,19 +1522,24 @@ setupPinchZoom() {
     if (e.touches.length === 2 && initialDistance) {
       const dx = e.touches[0].clientX - e.touches[1].clientX;
       const dy = e.touches[0].clientY - e.touches[1].clientY;
-      const newDistance = Math.sqrt(dx*dx + dy*dy);
+      const newDistance = Math.sqrt(dx * dx + dy * dy);
 
       if (newDistance - initialDistance > 50) {
-        // Pinch out → Zoom Fill
-        this.elements.playerContainer.classList.add("zoom-fill");
+        this.elements.playerContainer.classList.add("zoom-fill"); // zoom fill
         initialDistance = null;
       } else if (initialDistance - newDistance > 50) {
-        // Pinch in → Fit
-        this.elements.playerContainer.classList.remove("zoom-fill");
+        this.elements.playerContainer.classList.remove("zoom-fill"); // fit
         initialDistance = null;
       }
     }
   }, { passive: true });
+
+  overlay.addEventListener("touchend", (e) => {
+    if (e.touches.length < 2) {
+      // go back to passthrough when only one finger remains
+      overlay.style.pointerEvents = "none";
+    }
+  });
 }
 
     }
