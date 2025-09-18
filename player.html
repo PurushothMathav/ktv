@@ -1503,13 +1503,14 @@ setupPinchZoom() {
   let initialDistance = null;
   const overlay = document.getElementById("gestureOverlay");
 
-  overlay.style.pointerEvents = "none"; // default: pass through
+  // Always default to passthrough
+  overlay.style.pointerEvents = "none";
 
   overlay.addEventListener("touchstart", (e) => {
     if (document.fullscreenElement !== this.elements.playerContainer) return;
 
     if (e.touches.length === 2) {
-      // enable overlay only for pinch
+      // Only enable overlay if two fingers go down together
       overlay.style.pointerEvents = "auto";
 
       const dx = e.touches[0].clientX - e.touches[1].clientX;
@@ -1536,8 +1537,8 @@ setupPinchZoom() {
 
   overlay.addEventListener("touchend", (e) => {
     if (e.touches.length < 2) {
-      // go back to passthrough when only one finger remains
-      overlay.style.pointerEvents = "none";
+      overlay.style.pointerEvents = "none"; // disable overlay when pinch ends
+      initialDistance = null;
     }
   });
 }
