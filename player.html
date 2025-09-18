@@ -653,6 +653,9 @@
         <button class="nav-btn cast-btn" id="castBtn" title="Open Link">
           <i class="fa-solid fa-globe"></i>
         </button>
+		<button class="nav-btn fs-btn" id="fsBtn" title="Fullscreen">
+		  <i class="fas fa-expand"></i>
+		</button>
         <button class="nav-btn share-btn" id="shareBtn" title="Share Video">
           <i class="fas fa-share-alt"></i>
         </button>
@@ -1294,6 +1297,19 @@ initCast() {
 			// open stream.html in same tab or new tab
 			window.location.href = 'stream.html';
 		});
+		
+		this.elements.fsBtn = document.getElementById("fsBtn");
+		this.elements.fsBtn.addEventListener("click", () => this.toggleFullscreen());
+		
+		document.addEventListener("fullscreenchange", () => {
+  if (document.fullscreenElement) {
+    this.elements.fsBtn.innerHTML = '<i class="fas fa-compress"></i>'; // exit icon
+    this.elements.fsBtn.title = "Exit Fullscreen";
+  } else {
+    this.elements.fsBtn.innerHTML = '<i class="fas fa-expand"></i>'; // enter icon
+    this.elements.fsBtn.title = "Enter Fullscreen";
+  }
+});
 
         // Cast button
         this.elements.castBtn.addEventListener('click', () => this.handleCast());
